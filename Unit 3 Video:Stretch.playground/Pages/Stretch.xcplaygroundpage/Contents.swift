@@ -1,5 +1,5 @@
 
-class Person {
+class Person: Equatable {
     let firstName: String
     let lastName: String
     let age: Int
@@ -7,10 +7,10 @@ class Person {
     let donor: Bool
     
     init(firstName: String, lastName: String, age: Int, dateOfBirth: String) {
-self.firstName = firstName
-self.lastName = lastName
-self.age = age
-self.dateOfBirth = dateOfBirth
+        self.firstName = firstName
+        self.lastName = lastName
+        self.age = age
+        self.dateOfBirth = dateOfBirth
     }
 }
 
@@ -20,7 +20,7 @@ let carol = Person(firstName: "Rebecca", lastName: "Mordo", age: 30, dateOfBirth
 let clubMembers: [Person] = [james, andrea, carol]
 
 
-class areYouAMemberOfTheClub {
+class areYouAMemberOfTheClub() {
     let person: Bool
     
     init(person: Bool) {
@@ -28,12 +28,43 @@ class areYouAMemberOfTheClub {
     }
     
     func ==(_ Person: Self, _ clubMembers: Self) {
-    if return == clubMembers[i] {
-    return "True"
-    } else {
-    return "Not in the club"}
+        if return == clubMembers[i] {
+            return "True"
+        } else {
+            return "Not in the club"}
+    }
+
+
+/// Solution 
+    //the errors below come from my attempt above^. The below solution is correct
+
+    class Person: Equatable {
+        let firstName: String
+        let lastName: String
+        let age: Int
+        
+        
+        init(firstName: String, lastName: String, age: Int) {
+            self.firstName = firstName
+            self.lastName = lastName
+            self.age = age
+            
+        }
 }
+    
+    func ==(lhs: Person, rhs: Person) -> Bool {
+        return lhs.age == rhs.age && lhs.firstName == rhs.firstName && lhs.lastName == rhs.lastName
+    }
+    
+    let james = Person(firstName: "James", lastName: "Pacheco", age: 26)
+    let andrea = Person(firstName: "Andrea", lastName: "Mower", age: 20)
+    let carol = Person(firstName: "Rebecca", lastName: "Mordo", age: 30)
+    var clubMembers: [Person] = [james, andrea, carol]
+    let greg = Person(firstName: "Greg", lastName: "Fetcher", age: 34)
+    let someon = Person(firstName: "someone", lastName: "Bill", age: 65)
+    clubMembers.append(greg)
 
-
-
-
+    func areYouAMemberOfTheClub(person: Person) -> Bool {
+        return clubMembers.contains(person)
+}
+areYouAMemberOfTheClub(carol)
