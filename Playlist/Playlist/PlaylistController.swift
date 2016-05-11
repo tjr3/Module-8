@@ -15,7 +15,8 @@ class PlaylistController {
     
     var playlists: [Playlist] = []
     func addPlaylist(title: String) {
-    
+        let playlist = Playlist(title: title)
+        playlists.append(playlist)
     }
     
     func removePlaylist(playlist: Playlist) {
@@ -23,7 +24,7 @@ class PlaylistController {
     }
     
     func addSongToPlaylist(song: Song, playlist: Playlist) {
-        
+        playlist.songs.append(song)
     }
 
     func removeSongFromPlaylist(song: Song, playlist: Playlist) {

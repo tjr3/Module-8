@@ -13,6 +13,8 @@ class SongsTableViewController: UITableViewController {
     @IBOutlet weak var songTextField: UITextField!
     @IBOutlet weak var artistTextField: UITextField!
     
+    var playlist: Playlist?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,23 +33,31 @@ class SongsTableViewController: UITableViewController {
     // MARK: - Action Buttons
     
     @IBAction func addButtonTapped(sender: AnyObject) {
-    }
+        guard let playlist = playlist, song = songTextField.text, artist = artistTextField.text where song.characters.count > 0 && artist.characters.count > 0 else { return }
+        SongController.createSong(song, artist: artist, playlist: playlist)
+        songTextField.text = ""
+        artistTextField.text = ""
+        tableView.reloadData()    }
 
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return playlist?.songs.count ?? 0 //nil coalesce
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("songCell", forIndexPath: indexPath)
+        if let song = playlist?.songs[indexPath.row] {
+            cell.textLabel?.text = song.name
+            cell.detailTextLabel?.text = song.artist
+        }
 
         // Configure the cell...
 
